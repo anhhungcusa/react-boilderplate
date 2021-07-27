@@ -1,0 +1,39 @@
+@mixin generate-utility($utility) {
+  $values: map-get($utility, value);
+  // if the values are list or string, convert it into a map
+
+  @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
+    $values: zip($values, $values);
+  }
+
+  // multiple properties are possible
+  $properties: map-get(
+    $map: $utility,
+    $key: property,
+  );
+  @if type-of($value: $properties) == 'string' {
+    $properties: append(
+      $list: (),
+      $val: $properties,
+    );
+  }
+
+  $class: map-get(
+    $map: $utility,
+    $key: class,
+  );
+  $important: map-get(
+    $map: $utility,
+    $key: important,
+  );
+
+  $class: if($class != null, $class, nth($properties, 1));
+  // generate style
+  @each $key, $value in $values {
+    .#{$class + '-' + $key} {
+      @each $property in $properties {
+        #{$property}: #{$value} #{if($important == true, !important, null)};
+      }
+    }
+  }
+}

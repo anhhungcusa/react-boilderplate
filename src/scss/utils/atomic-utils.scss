@@ -1,0 +1,100 @@
+@import './atomic-generator.scss';
+
+$utilities: () !default;
+$utilities: map-merge(
+  (
+    z-index: (
+      print: true,
+      importance: true,
+      property: z-index,
+      class: layer,
+      value: (
+        sticky: 1000,
+        fixed: 1020,
+        dropdown: 1030,
+        tooltip: 1040,
+        modal: 1050,
+        hidden: -10,
+        max: '9999999 !important',
+      ),
+    ),
+    cursor: (
+      print: true,
+      property: cursor,
+      value: pointer,
+    ),
+    position: (
+      print: true,
+      property: position,
+      class: p,
+      value: relative absolute fixed sticky,
+    ),
+    text-algin: (
+      print: true,
+      property: text-align,
+      value: center end,
+    ),
+    padding: (
+      print: true,
+      property: padding,
+      class: pd,
+      value: (
+        1: 10px,
+        2: 20px,
+        3: 30px,
+      ),
+    ),
+    height: (
+      print: true,
+      property: height,
+      class: h,
+      value: (
+        100: 100%,
+      ),
+    ),
+    width: (
+      print: true,
+      property: width,
+      class: width,
+      value: (
+        100: 100%,
+        50: 50%,
+      ),
+    ),
+    user-select: (
+      print: true,
+      property: width,
+      class: user-select,
+      value: none,
+    ),
+    round: (
+      print: true,
+      important: true,
+      property: border-radius,
+      class: round,
+      value: (
+        1: 2px,
+        2: 5px,
+        circle: 99999px,
+      ),
+    ),
+    depth: (
+      print: true,
+      property: box-shadow,
+      class: depth,
+      value: (
+        4: '0 1.6px 3.6px 0 rgb(0 0 0 / 13%), 0 0.3px 0.9px 0 rgb(0 0 0 / 11%)',
+        8: '0 3.2px 7.2px 0 rgb(0 0 0 / 13%), 0 0.6px 1.8px 0 rgb(0 0 0 / 11%)',
+        16: '0 6.4px 14.4px 0 rgb(0 0 0 / 13%), 0 1.2px 3.6px 0 rgb(0 0 0 / 11%)',
+        64: '0 25.6px 57.6px 0 rgb(0 0 0 / 22%), 0 4.8px 14.4px 0 rgb(0 0 0 / 18%)',
+      ),
+    ),
+  ),
+  $utilities
+);
+
+@each $key, $utility in $utilities {
+  @if type-of($value: $utility) == 'map' and map-get($map: $utility, $key: print) == true {
+    @include generate-utility($utility);
+  }
+}
