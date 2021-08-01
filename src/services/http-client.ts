@@ -18,7 +18,7 @@ type ErrorResponse = AxiosError & {
 
 export class HttpClient {
   readonly instance: AxiosInstance;
-  private _isAttachedAuthorizationToken = false;
+  private _isAttachedAuthToken = false;
   private _callbacks?: HttpRequestCallback;
 
   constructor(baseURL: string, config?: RequestConfig) {
@@ -90,16 +90,16 @@ export class HttpClient {
   }
 
   setAuthorization(token: string, type: 'Token' | 'Bearer') {
-    this._isAttachedAuthorizationToken = true;
+    this._isAttachedAuthToken = true;
     this.instance.defaults.headers.common['Authorization'] = `${type} ${token}`;
 
     this._callbacks?.onSetAuthorization && this._callbacks.onSetAuthorization(token);
   }
 
   deleteAuthorization() {
-    if (this._isAttachedAuthorizationToken) {
+    if (this._isAttachedAuthToken) {
       delete this.instance.defaults.headers.common['Authorization'];
-      this._isAttachedAuthorizationToken = false;
+      this._isAttachedAuthToken = false;
     }
   }
 
