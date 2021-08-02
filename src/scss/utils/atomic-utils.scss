@@ -89,6 +89,41 @@ $utilities: map-merge(
         64: '0 25.6px 57.6px 0 rgb(0 0 0 / 22%), 0 4.8px 14.4px 0 rgb(0 0 0 / 18%)',
       ),
     ),
+    // START Flex Box
+    display:
+      (
+        print: true,
+        property: display,
+        class: justify,
+        value: (
+          start: flex-start,
+          end: flex-end,
+          center: center,
+          between: space-between,
+        ),
+      ),
+    justify-content: (
+      print: true,
+      property: justify-content,
+      class: justify,
+      value: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+        between: space-between,
+      ),
+    ),
+    align-items: (
+      print: true,
+      property: align-items,
+      class: align,
+      value: (
+        start: flex-start,
+        end: flex-end,
+        center: center,
+      ),
+    )
+    // END Flex Box,,
   ),
   $utilities
 );
