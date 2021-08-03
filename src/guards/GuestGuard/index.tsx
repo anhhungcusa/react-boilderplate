@@ -5,11 +5,14 @@ import { Redirect } from 'react-router-dom';
 import { authSelector } from 'store/modules/auth/selector';
 import { PATH_NAME } from 'configs';
 
-export type AuthGuardProps = {};
+export type GuestGuardProps = {
+  preventAuthenticatedUser?: boolean;
+};
 
-export const AuthGuard: FC = (props) => {
+export const GuestGuard: FC<GuestGuardProps> = (props) => {
   const auth = useSelector(authSelector);
-  if (auth.init) return <div>loading....</div>;
-  if (!auth.init && !auth.isAuthenticated) return <Redirect to={PATH_NAME.LOGIN} />;
+  if (auth.isAuthenticated && props.preventAuthenticatedUser) {
+    return <Redirect to={PATH_NAME.ROOT} />;
+  }
   return <> {props.children} </>;
 };
