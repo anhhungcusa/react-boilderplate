@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 
-import { roleSelector } from 'store/modules/auth/selector';
+import { roleSelector } from 'store/modules/auth';
 import { useEffect } from 'react';
 import { PATH_NAME } from 'configs';
 import { useHistory } from 'react-router-dom';

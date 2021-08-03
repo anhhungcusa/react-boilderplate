@@ -1,10 +1,9 @@
-import { FC, Suspense } from 'react';
+import { FC, Suspense, lazy } from 'react';
 
 import { AuthGuard, AuthGuardProps, GuestGuard, GuestGuardProps } from 'guards';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { PATH_NAME } from 'configs';
-import { lazy } from 'react';
-import { Role } from 'store/modules/auth/type';
+import { Role } from 'store/modules/auth';
 import { Fragment } from 'react';
 
 const Error404 = lazy(() => import('pages/Error404'));

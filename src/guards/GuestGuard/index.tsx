@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { authSelector } from 'store/modules/auth/selector';
+import { authSelector } from 'store/modules/auth';
 import { PATH_NAME } from 'configs';
 
 export type GuestGuardProps = {

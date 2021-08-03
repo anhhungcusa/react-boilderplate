@@ -32,3 +32,6 @@ export const { actions: authActions, reducer: authReducer } = createSlice({
     },
   },
 });
+
+export * from './selector';
+export * from './type';
