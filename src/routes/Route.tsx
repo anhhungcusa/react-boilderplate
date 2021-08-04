@@ -1,10 +1,11 @@
 import { FC, Suspense, lazy } from 'react';
 
-import { AuthGuard, AuthGuardProps, GuestGuard, GuestGuardProps } from 'guards';
+import { AuthGuard, GuardProps, GuestGuard, RoleGuard } from 'guards';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { PATH_NAME } from 'configs';
 import { Role } from 'store/modules/auth';
 import { Fragment } from 'react';
+import { Main } from 'components/templates/Main';
 
 const Error404 = lazy(() => import('pages/Error404'));
 const Dashboard = lazy(() => import('pages/Dashboard'));
@@ -18,7 +19,7 @@ export interface RouteConfig {
   exact?: boolean;
   roles?: string[];
   guard?: FC;
-  guardProps?: Partial<GuestGuardProps & AuthGuardProps>;
+  layout?: FC;
   disabled?: boolean;
   routes?: RouteConfig[];
 }
@@ -38,13 +39,13 @@ const routeConfigs: RouteConfig[] = [
     path: PATH_NAME.LOGIN,
     exact: true,
     guard: GuestGuard,
-    guardProps: { preventAuthenticatedUser: true },
     component: Login,
   },
   {
     path: '/',
     guard: AuthGuard,
     component: Fragment,
+    layout: Main,
     routes: [
       {
         path: PATH_NAME.DASHBOARD,
@@ -54,11 +55,13 @@ const routeConfigs: RouteConfig[] = [
         path: PATH_NAME.ADMIN,
         component: Admin,
         roles: [Role.Admin],
+        guard: RoleGuard,
       },
       {
         path: PATH_NAME.NORMAL,
         component: Normal,
         roles: [Role.Admin, Role.Normal],
+        guard: RoleGuard,
       },
       {
         path: '*',
@@ -75,10 +78,22 @@ const renderRoute = (routes: RouteConfig[]) => {
         <Suspense fallback={<div>loading...</div>}>
           <Switch>
             {routes.map((route, index) => {
-              const { guard: Guard = Fragment, component: Component } = route;
+              const {
+                guard: Guard = Fragment,
+                layout: Layout = Fragment,
+                component: Component,
+              } = route;
+              const guardProps: GuardProps = {};
+              if (route.roles) {
+                guardProps.requiredRoles = route.roles;
+              }
               return (
                 <Route key={`route-${index}`} path={route.path} exact={route.exact}>
-                  <Guard>{route.routes?.length ? renderRoute(route.routes) : <Component />}</Guard>
+                  <Guard {...guardProps}>
+                    <Layout>
+                      {route.routes?.length ? renderRoute(route.routes) : <Component />}
+                    </Layout>
+                  </Guard>
                 </Route>
               );
             })}

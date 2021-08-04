@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 import { PATH_NAME } from 'configs';
 import { useRouter } from 'hooks/useRouter';
 
-export type Props = {
+export type RoleGuardProps = {
   requiredRoles?: string[];
 };
 
-export const RoleRoute: FC<Props> = ({ requiredRoles, children }) => {
+export const RoleGuard: FC<RoleGuardProps> = ({ requiredRoles, children }) => {
   const { replace } = useRouter();
   const role = useSelector(roleSelector);
   useEffect(() => {
