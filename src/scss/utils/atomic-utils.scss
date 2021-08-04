@@ -94,14 +94,15 @@ $utilities: map-merge(
       (
         print: true,
         property: display,
-        class: justify,
-        value: (
-          start: flex-start,
-          end: flex-end,
-          center: center,
-          between: space-between,
-        ),
+        class: d,
+        value: flex block inline-block none,
       ),
+    flex-direction: (
+      print: true,
+      property: flex-direction,
+      class: flex,
+      value: row column,
+    ),
     justify-content: (
       print: true,
       property: justify-content,
@@ -123,7 +124,7 @@ $utilities: map-merge(
         center: center,
       ),
     )
-    // END Flex Box,,
+    // END Flex Box,,,,,,,,,,
   ),
   $utilities
 );

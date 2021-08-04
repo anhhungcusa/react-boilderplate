@@ -16,12 +16,15 @@ export type PaginationResponse = {
   total: number;
 };
 
-export type Payload<Body extends any = any, Params extends any = any, Query extends any = any> = {
-  params?: Params;
-  query?: Query;
-  body?: Body;
-  pagination?: Pick<PaginationResponse, 'page' | 'size'>;
-};
+export type Payload<
+  Body extends any = unknown,
+  Params extends any = unknown,
+  Query extends any = unknown,
+> = (Params extends object ? { params: Params } : {}) &
+  (Query extends object ? { query: Query } : {}) &
+  (Body extends object ? { body: Body } : {}) & {
+    pagination?: Pick<PaginationResponse, 'page' | 'size'>;
+  };
 
 export type DataResponse<T extends object | null> = ErrorResponse &
-  (T extends null ? {} : { data: T; pagination: PaginationResponse });
+  (T extends null ? {} : { data: T; pagination?: PaginationResponse });

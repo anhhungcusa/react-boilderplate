@@ -3,21 +3,20 @@ import classnames from 'classnames';
 import './style.scss';
 
 const alignGroup = {
-  start: 'align-items-start',
-  end: 'align-items-end',
-  center: 'align-items-center',
+  start: 'align-start',
+  end: 'align-end',
+  center: 'align-center',
 };
 
 const justifyGroup = {
-  between: 'justify-content-between',
-  center: 'justify-content-center',
-  end: 'justify-content-end',
-  start: 'justify-content-start',
+  between: 'justify-between',
+  center: 'justify-center',
+  end: 'justify-end',
+  start: 'justify-start',
 };
 
 export interface FlexBoxProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  as?: React.ElementType;
   children?: React.ReactNode;
   className?: string;
   align?: keyof typeof alignGroup;
@@ -28,7 +27,6 @@ export interface FlexBoxProps
 }
 
 export const FlexBox: React.FC<FlexBoxProps> = ({
-  as = 'div',
   children,
   className = '',
   align,
